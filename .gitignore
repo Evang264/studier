@@ -1,0 +1,33 @@
+# Javascript section
+
+# dependencies
+js/node_modules
+js/.pnp
+js/.pnp.js
+
+# testing
+js/coverage
+
+# next.js
+js/.next/
+js/out/
+
+# production
+js/build
+
+# misc
+js/.DS_Store
+
+# debug
+js/npm-debug.log*
+js/yarn-debug.log*
+js/yarn-error.log*
+
+# local env files
+js/.env.local
+js/.env.development.local
+js/.env.test.local
+js/.env.production.local
+
+# ------------------------------------------------------------------------------
+# C++ Section
