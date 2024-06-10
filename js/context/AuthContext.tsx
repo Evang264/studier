@@ -6,7 +6,7 @@ import { auth } from '@/lib/firebaseConfig';
 interface AuthContextType {
   user: User | null;
 }
-const AuthContext = createContext<AuthContextType | null>(null);
+const AuthContext = createContext<AuthContextType>({ user: null });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
