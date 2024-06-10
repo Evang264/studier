@@ -1,15 +1,16 @@
 'use client';
 import { auth } from '@/lib/firebaseConfig';
-import { signInWithPopup, GoogleAuthProvider, AuthError } from 'firebase/auth';
+import { signInWithPopup, GoogleAuthProvider, User } from 'firebase/auth';
 
-export async function Login() {
+export async function GoogleLogin(): Promise<User | null> {
   const provider = new GoogleAuthProvider();
   try {
-    return await signInWithPopup(auth, provider);
+    return (await signInWithPopup(auth, provider)).user;
   } catch (e: any) {
-    if (e.code === "auth/popup-closed-by-user")
+    if (e.code === "auth/popup-closed-by-user") {
       console.info("Google popup closed by user");
-    else
-      throw e;
+      return null;
+    }
+    throw e;
   }
 }

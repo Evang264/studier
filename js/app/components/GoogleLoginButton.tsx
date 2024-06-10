@@ -1,10 +1,10 @@
 'use client';
-import { Login } from "@/lib/login";
+import { GoogleLogin } from "@/lib/login";
 import { FcGoogle } from 'react-icons/fc';
 
-async function handleClick() {
-  const user = await Login()!;
-  if (user === undefined) return;  // user did not login
+async function handleClick(): Promise<void> {
+  const user = await GoogleLogin()!;
+  if (user === null) return;  // user did not login
   console.log(user);
 }
 
