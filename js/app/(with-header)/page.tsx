@@ -1,10 +1,11 @@
 import Image from "next/image";
-import { Login } from "@/lib/login";
-import GoogleLoginButton from "./components/GoogleLoginButton";
+import GoogleLoginButton from "../components/GoogleLoginButton";
 
 export default function Home() {
   return (
-    <GoogleLoginButton />
+    <div>
+      <GoogleLoginButton />
+    </div>
   );
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">

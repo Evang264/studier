@@ -6,7 +6,8 @@ export default function Header() {
       <h1 className="text-5xl">Studier</h1>
       <div className="flex items-center">
         <button className="bg-green-600 hover:bg-green-800 text-white hover:text-gray-300 text-xl p-4 rounded-md mr-5">+ Post</button>
-        <UserIcon isClickable={true} size="6xl" />
+        
+        <UserIcon isClickable={true} size={60} />
       </div>
     </header>
   );

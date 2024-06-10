@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "@/app/globals.css";
 import Header from "@/app/components/Header";
 import { AuthProvider } from "@/context/AuthContext";
 
@@ -17,13 +17,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <AuthProvider>
-          <Header />
-          {children}
-        </AuthProvider>
-      </body>
-    </html>
+      <html lang="en">
+        <body className={inter.className}>
+            <p>app layout</p>
+            <Header />
+            {children}
+        </body>
+      </html>
   );
 }
