@@ -4,7 +4,7 @@ import GoogleLoginButton from "../components/GoogleLoginButton";
 export default function Home() {
   return (
     <div>
-      <GoogleLoginButton />
+      <p>placeholder text</p>
     </div>
   );
   return (

@@ -3,12 +3,10 @@ import { FaCheck, FaPencil, FaXmark } from "react-icons/fa6";
 
 export default function EditableInput({
   onUpdate: onEnter,
-  placeholder = "",
   text = "",
   multiline = false,
 }: {
   onUpdate: (text: string) => void;
-  placeholder: string;
   text: string;
   multiline: boolean;
 }) {
@@ -24,7 +22,6 @@ export default function EditableInput({
       {editable ? (
         <InputComponent
           className="bg-black text-white"
-          placeholder={placeholder}
           type="text"
           value={value}
           onChange={(event) => setValue(event.target.value)}
