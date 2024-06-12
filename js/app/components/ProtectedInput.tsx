@@ -1,21 +1,18 @@
 import EditableInput from "./EditableInput";
 
 export default function ProtectedInput({
-  prompt,
   text,
   editable,
   onUpdate,
-  multiline,
+  multiline = false,
 }: {
-  prompt: string;
   text: string;
   editable: boolean;
   onUpdate: (text: string) => void;
-  multiline: boolean;
+  multiline?: boolean;
 }) {
   return (
     <div>
-      <text>{prompt}</text>
       {editable ? (
         <EditableInput text={text} onUpdate={onUpdate} multiline={multiline} />
       ) : (
