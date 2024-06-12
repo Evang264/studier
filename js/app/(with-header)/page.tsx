@@ -1,13 +1,13 @@
 'use client';
 import Image from "next/image";
-import ModalComponent from '@/app/components/ModalComponent'
 import Post from '@/app/components/Post';
+import Card from '@/app/components/Card';
 
 export default function Home() {
   return (
-    <ModalComponent show={true} onClose={() => console.log("closed")}>
+    <Card>
       <Post postId="customID" editable={true} />
-    </ModalComponent>
+    </Card>
   );
 
   return (
