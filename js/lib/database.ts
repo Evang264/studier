@@ -2,6 +2,7 @@
 import { db } from "./firebaseConfig";
 import {
   collection,
+  addDoc,
   getDoc,
   setDoc,
   updateDoc,
@@ -9,13 +10,19 @@ import {
   DocumentSnapshot,
 } from "firebase/firestore";
 
-export interface User {
+export interface IUser {
   name: string;
   bio: string;
   pfp: string;
   school: string;
   calendly: string;
   posts: string[];
+}
+
+export interface IPost {
+  userId: string;
+  title: string;
+  description: string;
 }
 
 export async function createUser(
@@ -41,7 +48,7 @@ export async function updateUser(userId: string, updateData: object) {
   await updateDoc(doc(db, "users", userId), updateData);
 }
 
-export async function fetchUser(userId: string): Promise<User> {
+export async function fetchUser(userId: string): Promise<IUser> {
   const docSnapshot: DocumentSnapshot = await getDoc(
     doc(collection(db, "users"), userId)
   );
@@ -49,5 +56,26 @@ export async function fetchUser(userId: string): Promise<User> {
   if (!docSnapshot.exists())
     throw Error(`The requested user (UID: ${userId}) does not exist.`);
 
-  return docSnapshot.data() as User;
+  return docSnapshot.data() as IUser;
+}
+
+export async function createPost(userId: string, title: string, description: string): Promise<string> {
+  const docRef = await addDoc(collection(db, "posts"), {
+    userId: userId,
+    title: title,
+    description: description
+  });
+  return docRef.id;
+}
+
+export async function updatePost(postId: string, updateData: object) {
+  await updateDoc(doc(db, "posts", postId), updateData);
+}
+
+export async function fetchPost(postId: string): Promise<IPost> {
+  const docSnapshot: DocumentSnapshot = await getDoc(doc(db, "posts", postId));
+  if (!docSnapshot.exists())
+    throw Error(`The requested post (ID: ${postId}) does not exist.`);
+
+  return docSnapshot.data() as IPost;
 }
