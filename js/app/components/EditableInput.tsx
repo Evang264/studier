@@ -15,19 +15,18 @@ export default function EditableInput({
   const [editable, setEditable] = useState(false);
 
   const InputComponent = multiline ? "textarea" : "input";
-  const TextComponent = multiline? "pre" : "text";
 
   return (
     <div className="flex flex-row">
       {editable ? (
         <InputComponent
-          className="bg-black text-white"
+          className="bg-black text-white mr-4 w-full"
           type="text"
           value={value}
           onChange={(event) => setValue(event.target.value)}
         />
       ) : (
-        <pre>{value}</pre>
+        <pre className="mr-2">{value}</pre>
       )}
 
       {!editable ? (
@@ -37,14 +36,14 @@ export default function EditableInput({
       ) : (
         <div className="flex flex-row">
           <button>
-            <FaCheck onClick={() => {
+            <FaCheck color="green" onClick={() => {
               onEnter(value);
               setLastSavedValue(value);
               setEditable(false);
             }} />
           </button>
           <button>
-            <FaXmark onClick={() => {
+            <FaXmark color="red" onClick={() => {
               setValue(lastSavedValue);
               setEditable(false);
             }} />

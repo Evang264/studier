@@ -6,7 +6,7 @@ import Card from '@/app/components/Card';
 export default function Home() {
   return (
     <Card>
-      <Post postId="customID" editable={true} />
+      <Post postId="customID" editable />
     </Card>
   );
 

@@ -4,11 +4,13 @@ export default function ProtectedInput({
   text,
   editable,
   onUpdate,
+  className = "",
   multiline = false,
 }: {
   text: string;
   editable: boolean;
   onUpdate: (text: string) => void;
+  className?: string,
   multiline?: boolean;
 }) {
   return (
@@ -16,7 +18,7 @@ export default function ProtectedInput({
       {editable ? (
         <EditableInput text={text} onUpdate={onUpdate} multiline={multiline} />
       ) : (
-        <pre>{text}</pre>
+        <pre className={className}>{text}</pre>
       )}
     </div>
   );

@@ -8,6 +8,26 @@ import { IUser } from "@/lib/database";
 import LoadingIndicator from "@/app/components/LoadingIndicator";
 import ProtectedInput from "@/app/components/ProtectedInput";
 
+const inputFields = [
+  {
+    prompt: "Name:",
+    field: "name",
+  },
+  {
+    prompt: "School:",
+    field: "school",
+  },
+  {
+    prompt: "Bio:",
+    field: "bio",
+    multiline: true,
+  },
+  {
+    prompt: "Calendly:",
+    field: "calendly",
+  },
+];
+
 export default function Page({ params }: { params: { userId: string } }) {
   // TODO: redirect page if userId does not exist
 
@@ -27,63 +47,36 @@ export default function Page({ params }: { params: { userId: string } }) {
   if (!user) return <LoadingIndicator />;
 
   return (
-    <div>
-      <div className="flex flex-row">
+    <div className="flex flex-col m-6 items-center mx-auto max-w-2xl">
+      <div className="flex mb-5 w-full justify-center">
         <Image
+          className="mr-4"
           src={user.pfp}
-          width={100}
-          height={100}
+          width={150}
+          height={150}
           alt="User profile picture"
         />
-        <div>
-          <div className="flex flex-row">
-            <p>Name: </p>
-            <ProtectedInput
-              text={user.name}
-              editable={editable}
-              multiline={false}
-              onUpdate={(text) => updateUser(params.userId, { name: text })}
-            />
-          </div>
-          <div className="flex flex-row">
-            <p>School: </p>
-            <ProtectedInput
-              text={user.school}
-              editable={editable}
-              multiline={false}
-              onUpdate={(text) => updateUser(params.userId, { school: text })}
-            />
-          </div>
-          <div className="flex flex-row">
-            <p>Bio: </p>
-            <ProtectedInput
-              text={user.bio}
-              editable={editable}
-              multiline={false}
-              onUpdate={(text) => updateUser(params.userId, { bio: text })}
-            />
-          </div>
-          <div className="flex flex-row">
-            <p>Calendly: </p>
-            <ProtectedInput
-              text={user.calendly}
-              editable={editable}
-              multiline={false}
-              onUpdate={(text) => updateUser(params.userId, { calendly: text })}
-            />
-          </div>
-          <div className="flex flex-row">
-            <p>Profile pic link: </p>
-            <ProtectedInput
-              text={user.pfp}
-              editable={editable}
-              multiline={false}
-              onUpdate={(text) => updateUser(params.userId, { pfp: text })}
-            />
-          </div>
-        </div>
+        <ul className="flex flex-col justify-center">
+          {inputFields.map((inputField) => (
+            <li key={inputField.field} className="flex">
+              <b className="mr-2">{inputField.prompt}</b>
+              <ProtectedInput
+                className="flex-row"
+                text={user[inputField.field] as string}
+                editable={editable}
+                multiline={inputField.multiline}
+                onUpdate={(text) =>
+                  updateUser(params.userId, { [inputField.field]: text })
+                }
+              />
+            </li>
+          ))}
+        </ul>
       </div>
-      <h1>{user.name}&apos;s posts</h1>
+      <h1 className="text-2xl font-bold">{user.name}&apos;s posts</h1>
+      <ul>
+
+      </ul>
     </div>
   );
 }
