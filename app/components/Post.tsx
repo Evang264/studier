@@ -21,7 +21,7 @@ export default function Post({
       <div className="flex flex-row mb-2 w-full items-center">
         <Link
           href={`/user/${post.userId}`}
-          className="flex flex-row items-center"
+          className="flex flex-row items-center mr-4"
         >
           <Image
             src={user.pfp}
@@ -35,6 +35,13 @@ export default function Post({
             <p className="italic">{user.bio}</p>
           </div>
         </Link>
+        <a
+          className="bg-lime-600 p-3 rounded"
+          href={user.calendly}
+          target="blank"
+        >
+          Contact
+        </a>
       </div>
       <hr className="my-4" />
       <ProtectedInput
