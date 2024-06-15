@@ -40,7 +40,7 @@ export default function Post({
           href={user.calendly}
           target="blank"
         >
-          Contact
+          Schedule
         </a>
       </div>
       <hr className="my-4" />
