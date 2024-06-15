@@ -4,13 +4,17 @@ import {
   collection,
   addDoc,
   getDoc,
+  getDocs,
   setDoc,
   updateDoc,
   doc,
   DocumentSnapshot,
+  query,
+  where
 } from "firebase/firestore";
 
 export interface IUser {
+  [key: string]: string | string[];
   name: string;
   bio: string;
   pfp: string;
@@ -70,6 +74,18 @@ export async function createPost(userId: string, title: string, description: str
 
 export async function updatePost(postId: string, updateData: object) {
   await updateDoc(doc(db, "posts", postId), updateData);
+}
+
+export async function fetchAllPosts() {
+  const snapshots = await getDocs(collection(db, "posts"));
+  return snapshots.docs.map(doc => doc.data()) as IPost[];
+}
+
+export async function fetchUserPosts(userId: string) {
+  const querySnapshot = await getDocs(
+    query(collection(db, "posts"), where("userId", "==", userId))
+  );
+  return querySnapshot.docs.map((doc) => doc.data()) as IPost[];
 }
 
 export async function fetchPost(postId: string): Promise<IPost> {

@@ -4,9 +4,10 @@ import Image from "next/image";
 
 import { useAuth } from "@/context/AuthContext";
 import { fetchUser, updateUser } from "@/lib/database";
-import { IUser } from "@/lib/database";
+import { IUser, fetchUserPosts } from "@/lib/database";
 import LoadingIndicator from "@/app/components/LoadingIndicator";
 import ProtectedInput from "@/app/components/ProtectedInput";
+import PostsList from "@/app/components/PostsList";
 
 const inputFields = [
   {
@@ -74,9 +75,7 @@ export default function Page({ params }: { params: { userId: string } }) {
         </ul>
       </div>
       <h1 className="text-2xl font-bold">{user.name}&apos;s posts</h1>
-      <ul>
-
-      </ul>
+      <PostsList postIds={user.posts} />
     </div>
   );
 }
