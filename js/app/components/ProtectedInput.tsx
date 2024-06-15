@@ -16,7 +16,7 @@ export default function ProtectedInput({
   return (
     <div>
       {editable ? (
-        <EditableInput text={text} onUpdate={onUpdate} multiline={multiline} />
+        <EditableInput className={className} text={text} onUpdate={onUpdate} multiline={multiline} />
       ) : (
         <pre className={className}>{text}</pre>
       )}

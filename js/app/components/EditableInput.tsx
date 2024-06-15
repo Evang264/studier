@@ -3,12 +3,14 @@ import { FaCheck, FaPencil, FaXmark } from "react-icons/fa6";
 
 export default function EditableInput({
   onUpdate: onEnter,
+  className = "",
   text = "",
   multiline = false,
 }: {
   onUpdate: (text: string) => void;
-  text: string;
-  multiline: boolean;
+  className?: string,
+  text?: string;
+  multiline?: boolean;
 }) {
   const [value, setValue] = useState(text);
   const [lastSavedValue, setLastSavedValue] = useState(text);
@@ -20,13 +22,13 @@ export default function EditableInput({
     <div className="flex flex-row">
       {editable ? (
         <InputComponent
-          className="bg-black text-white mr-4 w-full"
+          className={`bg-black text-white mr-4 w-full ${className}`}
           type="text"
           value={value}
           onChange={(event) => setValue(event.target.value)}
         />
       ) : (
-        <pre className="mr-2">{value}</pre>
+        <pre className={`mr-2 ${className}`}>{value}</pre>
       )}
 
       {!editable ? (

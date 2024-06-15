@@ -30,11 +30,11 @@ export default function Post({
 
   return (
     <div>
-      <div className="flex flex-row mb-2">
+      <div className="flex flex-row mb-2 w-full items-center">
         <Image
           src={user.pfp}
-          width={30}
-          height={30}
+          width={45}
+          height={45}
           alt={`${user.name}'s profile picture`}
           className="mr-4"
         />
