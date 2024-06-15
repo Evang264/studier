@@ -83,7 +83,12 @@ export default function Page({ params }: { params: { userId: string } }) {
         </ul>
       </div>
       <h1 className="text-2xl font-bold">{user.name}&apos;s posts</h1>
-      <PostList posts={posts} users={users.current} editable={editable}/>
+      <PostList
+        posts={posts}
+        users={users.current}
+        postIds={user.posts}
+        editable={editable}
+      />
     </div>
   );
 }
