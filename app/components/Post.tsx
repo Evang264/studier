@@ -7,27 +7,16 @@ import { IUser, IPost } from "@/lib/database";
 import ProtectedInput from "./ProtectedInput";
 
 export default function Post({
+  post,
+  user,
   postId,
   editable = false,
 }: {
-  postId: string;
-  editable?: boolean;
+  post: IPost;
+  user: IUser;
+  postId?: string;
+  editable: boolean;
 }) {
-  const [post, setPost] = useState<IPost | null>(null);
-  const [user, setUser] = useState<IUser | null>(null);
-
-  // fetch the user
-  useEffect(() => {
-    const fetchData = async () => {
-      const fetchedPost = await fetchPost(postId);
-      setPost(fetchedPost);
-      setUser(await fetchUser(fetchedPost.userId));
-    };
-    fetchData();
-  }, []);
-
-  if (!user || !post) return <LoadingIndicator />;
-
   return (
     <div>
       <div className="flex flex-row mb-2 w-full items-center">
@@ -39,8 +28,12 @@ export default function Post({
           className="mr-4"
         />
         <div>
-          <p><b>{user.name}</b></p>
-          <p><i>{user.bio}</i></p>
+          <p>
+            <b>{user.name}</b>
+          </p>
+          <p>
+            <i>{user.bio}</i>
+          </p>
         </div>
       </div>
       <hr className="my-4" />
@@ -48,13 +41,17 @@ export default function Post({
         text={post.title}
         editable={editable}
         className="text-2xl mb-2"
-        onUpdate={(text) => updatePost(postId, { title: text })}
+        {...(editable? {
+          onUpdate: (text: string) => updatePost(postId!, { title: text })
+        }: {})}
       />
       <ProtectedInput
         text={post.description}
         editable={editable}
         multiline
-        onUpdate={(text) => updatePost(postId, { description: text })}
+        {...(editable? {
+          onUpdate: (text: string) => updatePost(postId!, { description: text })
+        }: {})}
       />
     </div>
   );

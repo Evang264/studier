@@ -1,13 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 
 import { useAuth } from "@/context/AuthContext";
-import { fetchUser, updateUser } from "@/lib/database";
+import { IPost, fetchUser, updateUser } from "@/lib/database";
 import { IUser, fetchUserPosts } from "@/lib/database";
 import LoadingIndicator from "@/app/components/LoadingIndicator";
 import ProtectedInput from "@/app/components/ProtectedInput";
-import PostList from "@/app/components/PostsList";
+import PostList from "@/app/components/PostList";
 
 const inputFields = [
   {
@@ -34,12 +34,19 @@ export default function Page({ params }: { params: { userId: string } }) {
   const editable: boolean = loggedInUser!.uid === params.userId;
 
   const [user, setUser] = useState<IUser | null>(null);
+  const [posts, setPosts] = useState<IPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const users = useRef<IUser[]>([]);
 
   // fetch the user
   useEffect(() => {
     const fetchData = async () => {
-      setUser(await fetchUser(params.userId));
+      const user_ = await fetchUser(params.userId);
+      setUser(user_);
+      if (user_) {
+        setPosts(await fetchUserPosts(params.userId));
+        users.current = Array.from({ length: user_.posts.length }, () => user_);
+      }
       setLoading(false);
     };
     fetchData();
@@ -76,7 +83,7 @@ export default function Page({ params }: { params: { userId: string } }) {
         </ul>
       </div>
       <h1 className="text-2xl font-bold">{user.name}&apos;s posts</h1>
-      <PostsList postIds={user.posts} />
+      <PostList posts={posts} users={users.current} editable={editable}/>
     </div>
   );
 }
