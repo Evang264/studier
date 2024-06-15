@@ -52,13 +52,13 @@ export async function updateUser(userId: string, updateData: object) {
   await updateDoc(doc(db, "users", userId), updateData);
 }
 
-export async function fetchUser(userId: string): Promise<IUser> {
+export async function fetchUser(userId: string): Promise<IUser | null> {
   const docSnapshot: DocumentSnapshot = await getDoc(
     doc(collection(db, "users"), userId)
   );
 
   if (!docSnapshot.exists())
-    throw Error(`The requested user (UID: ${userId}) does not exist.`);
+    return null;
 
   return docSnapshot.data() as IUser;
 }

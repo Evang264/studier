@@ -7,7 +7,7 @@ import { fetchUser, updateUser } from "@/lib/database";
 import { IUser, fetchUserPosts } from "@/lib/database";
 import LoadingIndicator from "@/app/components/LoadingIndicator";
 import ProtectedInput from "@/app/components/ProtectedInput";
-import PostsList from "@/app/components/PostsList";
+import PostList from "@/app/components/PostsList";
 
 const inputFields = [
   {
@@ -30,22 +30,23 @@ const inputFields = [
 ];
 
 export default function Page({ params }: { params: { userId: string } }) {
-  // TODO: redirect page if userId does not exist
-
   const { user: loggedInUser } = useAuth();
   const editable: boolean = loggedInUser!.uid === params.userId;
 
   const [user, setUser] = useState<IUser | null>(null);
+  const [loading, setLoading] = useState(true);
 
   // fetch the user
   useEffect(() => {
     const fetchData = async () => {
       setUser(await fetchUser(params.userId));
+      setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [params.userId]);
 
-  if (!user) return <LoadingIndicator />;
+  if (loading) return <LoadingIndicator />;
+  if (!user) return <p>The requested user does not exist.</p>;
 
   return (
     <div className="flex flex-col m-6 items-center mx-auto max-w-2xl">
