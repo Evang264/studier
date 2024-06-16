@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 
 import { useAuth } from "@/context/AuthContext";
-import { IPost, fetchUser, updateUser } from "@/lib/database";
+import { IPost, deletePost, fetchUser, updateUser } from "@/lib/database";
 import { IUser, fetchUserPosts } from "@/lib/database";
 import LoadingIndicator from "@/app/components/LoadingIndicator";
 import ProtectedInput from "@/app/components/ProtectedInput";
@@ -55,6 +55,13 @@ export default function Page({ params }: { params: { userId: string } }) {
   if (loading) return <LoadingIndicator />;
   if (!user) return <p>The requested user does not exist.</p>;
 
+  const onDelete = async (postId: string) => {
+    await deletePost(params.userId, postId);
+    setUser(await fetchUser(params.userId));
+    setPosts(posts.filter((_, i) => user.posts[i] !== postId));
+    users.current.pop();
+  };
+
   return (
     <div className="flex flex-col m-6 items-center mx-auto max-w-2xl">
       <div className="flex mb-5 w-full justify-center">
@@ -88,6 +95,7 @@ export default function Page({ params }: { params: { userId: string } }) {
         users={users.current}
         postIds={user.posts}
         editable={editable}
+        onDelete={onDelete}
       />
     </div>
   );

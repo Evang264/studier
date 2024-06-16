@@ -10,7 +10,8 @@ import {
   doc,
   DocumentSnapshot,
   query,
-  where
+  where,
+  deleteDoc
 } from "firebase/firestore";
 
 export interface IUser {
@@ -86,6 +87,14 @@ export async function fetchUserPosts(userId: string) {
     query(collection(db, "posts"), where("userId", "==", userId))
   );
   return querySnapshot.docs.map((doc) => doc.data()) as IPost[];
+}
+
+export async function deletePost(userId: string, postId: string) {
+  await deleteDoc(doc(db, "posts", postId));
+  // delete it from user's list of posts
+  let posts = (await fetchUser(userId))!.posts;
+  posts = posts.filter((id) => id !== postId);
+  await updateUser(userId, { posts: posts });
 }
 
 export async function fetchPost(postId: string): Promise<IPost> {

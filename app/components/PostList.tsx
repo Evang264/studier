@@ -7,11 +7,13 @@ export default function PostList({
   users,
   postIds,
   editable, // the posts and users should map to each other
+  onDelete,
 }: {
   posts: IPost[];
   users: IUser[];
   postIds?: string[];
   editable: boolean;
+  onDelete?: (postId: string) => void;
 }) {
   return (
     <ul>
@@ -22,6 +24,7 @@ export default function PostList({
             user={users[index]}
             {...(postIds && { postId: postIds[index] })}
             editable={editable}
+            {...(onDelete && { onDelete: () => onDelete(postIds![index]) })}
           />
         </Card>
       ))}

@@ -9,11 +9,13 @@ export default function Post({
   post,
   user,
   postId,
+  onDelete,
   editable = false,
 }: {
   post: IPost;
   user: IUser;
   postId?: string;
+  onDelete?: () => void;
   editable: boolean;
 }) {
   return (
@@ -42,6 +44,11 @@ export default function Post({
         >
           Schedule
         </a>
+        {editable && (
+          <button className="ml-auto text-red-500 text-4xl" onClick={onDelete}>
+            &times;
+          </button>
+        )}
       </div>
       <hr className="my-4" />
       <ProtectedInput
