@@ -29,10 +29,10 @@ export default function Header() {
       <NewPost
         show={showNewPost}
         onClose={() => setShowNewPost(false)}
-        onFinish={(title, description) => {
-          createPost(user!.uid, title, description);
+        onFinish={async (title, description) => {
+          await createPost(user!.uid, title, description);
           setShowNewPost(false);
-          console.log("the new post should now be closed");
+          window.location.reload();
         }}
       />
       <header className="flex justify-between items-center p-5 sticky w-full backdrop-blur border-b dark:border-gray-600">
@@ -41,7 +41,7 @@ export default function Header() {
         </Link>
         <div className="flex items-center space-x-5">
           <button
-            onClick={() => {setShowNewPost(true); console.log(showNewPost)}}
+            onClick={() => setShowNewPost(true)}
             className="bg-green-600 hover:bg-green-800 text-white hover:text-gray-300 text-xl p-4 rounded-md"
           >
             + Post

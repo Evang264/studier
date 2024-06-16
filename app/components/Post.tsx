@@ -45,7 +45,7 @@ export default function Post({
           Schedule
         </a>
         {editable && (
-          <button className="ml-auto text-red-500 text-4xl" onClick={onDelete}>
+          <button className="ml-5 ml-auto text-red-500 text-4xl" onClick={onDelete}>
             &times;
           </button>
         )}
