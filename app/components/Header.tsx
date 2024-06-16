@@ -3,11 +3,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
-import UserIcon from "./UserIcon";
 import { logout } from "@/lib/login";
 import { useAuth } from "@/context/AuthContext";
 import NewPost from "./NewPost";
 import { createPost } from "@/lib/database";
+import { FaUserCircle } from "react-icons/fa";
 
 export default function Header() {
   const { user } = useAuth();
@@ -49,7 +49,7 @@ export default function Header() {
 
           <Link href={`/user/${user!.uid}`}>
             {loading ? (
-              <UserIcon size={60} />
+              <FaUserCircle className="hover:text-gray-300" size={60} />
             ) : (
               <Image
                 src={pfp}
