@@ -70,6 +70,9 @@ export async function createPost(userId: string, title: string, description: str
     title: title,
     description: description
   });
+  let posts = (await fetchUser(userId))!.posts;
+  posts.push(docRef.id);
+  updateUser(userId, { posts: posts });
   return docRef.id;
 }
 
