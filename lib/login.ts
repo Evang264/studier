@@ -1,6 +1,6 @@
 'use client';
 import { auth } from '@/lib/firebaseConfig';
-import { signInWithPopup, GoogleAuthProvider, User } from 'firebase/auth';
+import { signInWithPopup, GoogleAuthProvider, User, signOut } from 'firebase/auth';
 
 export async function GoogleLogin(): Promise<User | null> {
   const provider = new GoogleAuthProvider();
@@ -13,4 +13,8 @@ export async function GoogleLogin(): Promise<User | null> {
     }
     throw e;
   }
+}
+
+export async function logout() {
+  await signOut(auth);
 }
